@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\DB;
+use Auth;
 
 class PostController extends Controller
 {
@@ -41,9 +42,15 @@ class PostController extends Controller
      */
     public function create()
     {
-        $tags = tag::all();
-        $categories = category::all();
-        return view('admin.post.post',compact('tags','categories'));
+        if (Auth::user()->can('posts.create')) {
+
+            $tags = tag::all();
+            $categories = category::all();
+            return view('admin.post.post',compact('tags','categories'));
+
+        }
+        return redirect(route('admin.home'));
+       
     }
 
     /**
@@ -101,11 +108,13 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-
+        if (Auth::user()->can('posts.update')) {
         $post = post::with('tags','categories')->where('id',$id)->first();
         $tags = tag::all();
         $categories = category::all();
         return view('admin.post.edit',compact('post','tags','categories'));
+        }
+        return redirect(route('admin.home'));
     }
 
     /**

@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Model\user\category;
 use App\Http\Controllers\Controller;
+use Auth;
 
 class CategoryController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth:admin');
+        
     }
     /**
      * Display a listing of the resource.
@@ -19,8 +21,11 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        if (Auth::user()->can('posts.category')) {
         $categories = category::orderBy('id','DESC')->get();
         return view('admin.category.show')->with(compact('categories'));
+        }
+        return redirect(route('admin.home'));
     }
 
     /**
@@ -30,7 +35,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        
         return view('admin.category.category');
+        
     }
 
     /**

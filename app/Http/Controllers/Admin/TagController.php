@@ -11,6 +11,7 @@ class TagController extends Controller
     public function __construct()
     {
         $this->middleware('auth:admin');
+        $this->middleware('can:posts.tag');
     }
     /**
      * Display a listing of the resource.
@@ -19,8 +20,11 @@ class TagController extends Controller
      */
     public function index()
     {
+        if (Auth::user()->can('posts.tag')) {
         $tags = tag::orderBy('id','DESC')->get();
         return view('admin.tag.show')->with(compact('tags'));
+        }
+        return redirect(route('admin.home'));
 
     }
 

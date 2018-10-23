@@ -3,7 +3,6 @@
 namespace App\Policies;
 
 use App\Model\admin\admin;
-use App\Model\user\post;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class PostPolicy
@@ -17,7 +16,7 @@ class PostPolicy
      * @param  \App\Post  $post
      * @return mixed
      */
-    public function view(admin $user, post $post)
+    public function view(admin $user)
     {
         //
     }
@@ -30,19 +29,9 @@ class PostPolicy
      */
     public function create(admin $user)
     {
-        foreach($user->roles as $key => $role){
-            foreach($role->permissions as $permission){
-
-                if($permission->id == 1){
-
-                    return true;
-
-                }
-
-            }
-        }
-        return false;
+        return $this->getPermission($user,1);
     }
+    
 
     /**
      * Determine whether the user can update the post.
@@ -51,9 +40,9 @@ class PostPolicy
      * @param  \App\Post  $post
      * @return mixed
      */
-    public function update(admin $user, post $post)
+    public function update(admin $user)
     {
-        //
+        return $this->getPermission($user,2);
     }
 
     /**
@@ -63,10 +52,33 @@ class PostPolicy
      * @param  \App\Post  $post
      * @return mixed
      */
-    public function delete(admin $user, post $post)
+    public function delete(admin $user)
     {
-        //
+        return $this->getPermission($user,3);
     }
+    public function tag(admin $user)
+    {
+        return $this->getPermission($user,8);
+    }
+    public function category(admin $user)
+    {
+        return $this->getPermission($user,9);
+    }
+    protected function getPermission($user,$p_id)
+    {
+        foreach($user->roles as $key => $role){
+            foreach($role->permissions as $permission){
+
+                if($permission->id == $p_id){
+
+                    return true;
+
+                }
+
+            }
+        }
+        return false;
+    } 
 
     /**
      * Determine whether the user can restore the post.

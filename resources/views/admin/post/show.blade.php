@@ -57,8 +57,12 @@
                   <th>Slug</th>
                   <th>Creatd At</th>
                   <th>Post Status</th>
+                  @can('posts.update',Auth::user())
                   <th>Edit</th>
+                  @endcan
+                  @can('posts.delete',Auth::user())
                   <th>Delete</th>
+                  @endcan
                 </tr>
                 </thead>
                 <tbody>
@@ -75,7 +79,10 @@
                     @else
                     No Public
                     @endif</td>
-                  <td><a href="{{ route('post.edit',$post->id) }}" class="btn btn-warning">Edit</a></td>
+                    @can('posts.update',Auth::user())
+                    <td><a href="{{ route('post.edit',$post->id) }}" class="btn btn-warning">Edit</a></td>
+                    @endcan
+                    @can('posts.delete',Auth::user())
                   <td>
                     <a class="btn btn-danger" href="#" onclick="
                     if(confirm('Are you sure, You Want to delete this?'))
@@ -92,6 +99,7 @@
                           {{ method_field('DELETE') }}
                        </form>
                   </td>
+                  @endcan
                 </tr>
                 @endforeach
                 </tbody>
@@ -103,8 +111,12 @@
                   <th>Slug</th>
                   <th>Creatd At</th>
                   <th>Post Status</th>
+                  @can('posts.update',Auth::user())
                   <th>Edit</th>
+                  @endcan
+                  @can('posts.delete',Auth::user())
                   <th>Delete</th>
+                  @endcan
                 </tr>
                 </tfoot>
               </table>

@@ -24,8 +24,17 @@
           </a>
           <ul class="treeview-menu">
             <li class=""><a href="{{ route('post.index') }}"><i class="fa fa-circle-o"></i>Post</a></li>
-            <li><a href="{{ route('category.index') }}"><i class="fa fa-circle-o"></i> Categories</a></li>
+            @can('posts.category',Auth::user())
+
+             <li><a href="{{ route('category.index') }}"><i class="fa fa-circle-o"></i> Categories</a></li>
+
+            @endcan
+
+             @can('posts.tag',Auth::user())
+
             <li><a href="{{ route('tag.index') }}"><i class="fa fa-circle-o"></i> Tags</a></li>
+
+            @endcan
             <li><a href="{{ route('user.index') }}"><i class="fa fa-circle-o"></i> User</a></li>
             <li><a href="{{ route('role.index') }}"><i class="fa fa-circle-o"></i> Roles</a></li>
             <li><a href="{{ route('permission.index') }}"><i class="fa fa-circle-o"></i> Permissions</a></li>
