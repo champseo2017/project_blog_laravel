@@ -1,0 +1,20 @@
+#custome-color-select-tags .select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: blue;
+   
+}
+
+#custome-color-select-categories .select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: blue;
+}
+
+
+.navbar-nav>.user-menu>.dropdown-menu>li.user-header>img {
+    z-index: 5;
+    height: 90px;
+    width: 90px;
+    border: 0 !important;
+    border-color: transparent;
+    border-color: rgba(255,255,255,0.2);
+}
+
+
