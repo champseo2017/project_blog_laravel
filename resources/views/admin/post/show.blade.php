@@ -30,7 +30,12 @@
         @endif
         <div class="box-header with-border">
           <h3 class="box-title">Posts</h3>
-          <a class="col-lg-offset-5 btn btn-success" href="{{ route('post.create') }}">Add New</a>
+          @can('posts.create', Auth::user())
+
+           <a class="col-lg-offset-5 btn btn-success" href="{{ route('post.create') }}">Add New</a>
+
+          @endcan
+         
           <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
                     title="Collapse">
